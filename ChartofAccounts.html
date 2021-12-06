@@ -99,6 +99,7 @@
                         <input type="text" id="fStatement"><br>
                         <label for="group">Choose Group:</label>
                         <input list="groups" id="group" name="group"/>
+                        
                         <datalist id="groups">
                             <option value="Current Assets" id="ca">
                             <option value="Long Term Assets" id="lta">
@@ -109,6 +110,8 @@
                             <option value="Cost of Sales" id="cos">
                             <option value="Expenses" id="ex">
                         </datalist><br>
+                        
+                        
                         <label for="sGroups">Sub-Groups:</label>
                         <input list ="cAssets" id="sGroups"><br>
 
@@ -119,42 +122,31 @@
                             <option value="Accounts receivable">
                             <option value="Inventory">   
                             <option value ="Other current assets">
-                        </datalist>
-                        <datalist id="ltAssets">
+                        
                             <!--Long term assets sub groups-->
                             <option value="Long term marketable securities">
                             <option value="Property, plant and equipment">    
                             <option value="Goodwill">    
                             <option value="Intellectual property">    
                             <option value="Other long term assets"> 
-                        </datalist>
-
-                        <datalist id ="cLiabilities">
+                        
                             <!--Current liabilities sub groups-->
                             <option value="Notes payable">
                             <option value="Accounts payable">    
                             <option value="Other current liabilities">   
-                        </datalist>
-
-                        <datalist id ="ltLiabilities">
+                        
                             <!--Long Term liabilities sub groups-->
                             <option value="Mortgages">
                             <option value="Bonds">
-                        </datalist>
-
-                        <datalist id="equity">
+                        
                             <!--Equity-->
                             <option value="Capital">
                             <option value="Retained Earnings">
-                        </datalist>
-
-                        <datalist id="income">
+                       
                             <!--Income sub groups-->
                             <option value="Revenue">
                             <option value="Other income">
-                        </datalist>
-
-                        <datalist id="expense">
+                        
                             <!--Expense sub groups-->
                             <option value="Research and development">
                             <option value="Sales and marketing">    
@@ -173,15 +165,50 @@
                     </div>
 
 
-                    <div class="adminButtons">
-                        <!-- admin buttons -->
-                        <button id="addButton" onclick="productUpdate();"> Add<button> 
-                                <button id="editButton">Edit</button>    
-                                <button id="deleteButton"> Delete</button>
-                            
-                                </div>
-                                </body>
-                                <script>
+ <div class="adminButtons">
+ <!-- admin buttons -->
+ <button id="addButton" onclick="onAddWebsite()"> Add<button> 
+
+</div>
+</body>
+<script>
+                                    
+    const formEl = document.querySelector("form");
+    const tbodyEl = document.querySelector("tbody");
+    const tableEl = document.querySelector("table");
+
+    function onAddWebsite(e) {
+      
+       const acctN = document.getElementById("aName").value;
+      const code = document.getElementById("code").value;
+      const financeS = document.getElementById("fStatement").value;
+      const group = document.getElementById("group").value;
+      const subG = document.getElementById("sGroups").value;
+      const normal = document.getElementById("norm").value;
+        tbodyEl.innerHTML += `
+      
+            <tr>
+                <td>${acctN}</td>
+                <td>${code}</td>
+                <td>${financeS}</td>
+                <td>${group}</td>
+                <td>${subG}</td>
+                <td>${normal}</td>
+                <td><button class="deleteBtn">Delete</button></td>
+            </tr>
+        `;
+    }
+
+    function onDeleteRow(e) {
+      if (!e.target.classList.contains("deleteBtn")) {
+        return;
+      }
+      const btn = e.target;
+      btn.closest("tr").remove();
+    }
+   
+    tableEl.addEventListener("click", onDeleteRow);
+  
                                     function pageChange()
                                     {
                                         window.open('http://localhost:8383/Titan/ChartofAccounts.html');
